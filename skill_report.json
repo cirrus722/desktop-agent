@@ -1,0 +1,73 @@
+{
+  "skills": [
+    {
+      "name": "fetch-issue",
+      "has_scripts": false,
+      "uses_mcp": true
+    },
+    {
+      "name": "review-diff",
+      "has_scripts": true,
+      "uses_mcp": false
+    },
+    {
+      "name": "run-tests",
+      "has_scripts": false,
+      "uses_mcp": false
+    }
+  ],
+  "catalog_tokens": 249,
+  "full_tokens": 1618,
+  "disclosure_ratio": 6.5,
+  "trials": [
+    {
+      "query": "帮我跑一下测试",
+      "expected": "run-tests",
+      "hit": "run-tests",
+      "ok": true
+    },
+    {
+      "query": "测试挂了，帮我看下为什么挂了",
+      "expected": "run-tests",
+      "hit": "run-tests",
+      "ok": true
+    },
+    {
+      "query": "把这段 diff 审一遍",
+      "expected": "review-diff",
+      "hit": "review-diff",
+      "ok": true
+    },
+    {
+      "query": "看看这次改了什么",
+      "expected": "review-diff",
+      "hit": "review-diff",
+      "ok": true
+    },
+    {
+      "query": "拉一下 issue #42",
+      "expected": "fetch-issue",
+      "hit": "fetch-issue",
+      "ok": true
+    },
+    {
+      "query": "这个 issue 讲了什么",
+      "expected": "fetch-issue",
+      "hit": "fetch-issue",
+      "ok": true
+    },
+    {
+      "query": "今天天气怎么样",
+      "expected": null,
+      "hit": null,
+      "ok": true
+    },
+    {
+      "query": "帮我写一首诗",
+      "expected": null,
+      "hit": null,
+      "ok": true
+    }
+  ],
+  "false_positive": 0
+}
