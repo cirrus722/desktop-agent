@@ -2,6 +2,8 @@
 
 课程大作业：**桌面窗口 · 接大模型 · 能接 MCP · 只有四个工具**。
 
+**源码仓库：** <https://github.com/cirrus722/desktop-agent>
+
 v1.2 增量：技能目录与按需加载、`AGENTS.md` 分层注入、三条代码级 hook、
 只读 reviewer 子 agent。四个核心工具没有改名，也没有增加第五个通用工具。
 

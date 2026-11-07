@@ -56,6 +56,9 @@ New-Item -ItemType Directory -Path (Join-Path $payload "docs") -Force | Out-Null
 Copy-Item -LiteralPath (Join-Path $project "docs\安装与使用说明.md") -Destination (Join-Path $payload "docs") -Force
 Copy-Item -LiteralPath (Join-Path $project "docs\安装与使用说明.pdf") -Destination (Join-Path $payload "docs") -Force
 Copy-Item -LiteralPath (Join-Path $project "docs\screenshots") -Destination (Join-Path $payload "docs") -Recurse -Force
+if (Test-Path -LiteralPath (Join-Path $project "docs\GITHUB_URL.txt")) {
+    Copy-Item -LiteralPath (Join-Path $project "docs\GITHUB_URL.txt") -Destination (Join-Path $payload "docs") -Force
+}
 
 Write-Host "[4/6] 检查交付文件..." -ForegroundColor Cyan
 $required = @(
