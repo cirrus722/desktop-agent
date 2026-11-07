@@ -1,0 +1,22 @@
+[project]
+name = "desktop-agent"
+version = "1.2.0"
+description = "课程大作业：一个桌面智能体 —— 桌面窗口 + 大模型 + MCP + read/write/edit/bash 四个工具"
+requires-python = ">=3.10"
+dependencies = [
+    # 后端服务与事件流
+    "fastapi==0.115.6",
+    "uvicorn==0.34.0",
+    # HTTP 客户端（调用 LLM API；FastAPI 生态自带，版本钉死）
+    "httpx==0.28.1",
+    # 桌面窗口壳（双击出窗口，不是网页）
+    "pywebview==5.4",
+    # 环境变量加载
+    "python-dotenv==1.0.1",
+]
+
+[project.optional-dependencies]
+build = ["pyinstaller==6.11.1"]
+
+[tool.setuptools]
+packages = ["agent", "app", "server"]

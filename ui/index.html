@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Desktop Agent — 你自己的 Cursor</title>
+  <link rel="stylesheet" href="/static/style.css?v=5" />
+</head>
+<body>
+  <header id="topbar">
+    <span class="logo">⌘ Desktop Agent</span>
+    <span id="conn-dot" class="dot off" title="事件流连接状态"></span>
+    <span id="status-text">未连接</span>
+    <span class="spacer"></span>
+    <span id="mcp-badge" class="badge mcp hidden">MCP</span>
+  </header>
+
+  <main id="layout">
+    <!-- 左栏：资源管理器 -->
+    <aside id="explorer">
+      <div class="pane-title">资源管理器</div>
+      <div id="tree" class="tree"></div>
+    </aside>
+
+    <!-- 中栏：代码视图 -->
+    <section id="editor-pane">
+      <div class="pane-title" id="editor-title">未打开文件</div>
+      <pre id="editor"><code id="editor-code">点左侧文件查看内容；agent 修改文件后这里会显示 diff。</code></pre>
+      <pre id="diff-view" class="hidden"></pre>
+    </section>
+
+    <!-- 右栏：对话 + 工具调用 -->
+    <section id="chat-pane">
+      <div class="pane-title">对话 · 工具调用</div>
+      <div id="chat"></div>
+      <div id="input-row">
+        <input id="input" type="text" placeholder="说点什么…" autocomplete="off" />
+        <button id="btn-send">发送</button>
+        <button id="btn-stop" class="stop hidden" title="真中断：杀 bash + 停循环">■ 中断</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js?v=5"></script>
+</body>
+</html>

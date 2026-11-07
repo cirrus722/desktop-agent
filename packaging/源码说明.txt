@@ -1,0 +1,17 @@
+﻿Desktop Agent 1.2.0 源码说明
+===============================
+
+本安装包包含完整、可阅读、可修改的 Python 源码。
+
+程序源码目录：app\
+  app\agent\     智能体循环、四个工具、LLM 客户端、MCP 客户端、技能、hooks、reviewer
+  app\server\    FastAPI 后端、WebSocket/SSE 事件流、会话历史
+  app\ui\        三栏桌面界面（HTML/CSS/JavaScript）
+  app\app\       自检、检查、review 入口
+  app\skills\    三个可按需加载的技能
+  app\examples\  两个示例 MCP server
+
+运行配置：%APPDATA%\DesktopAgent\.env
+用户工作区：%USERPROFILE%\Documents\DesktopAgent\workspace
+
+内置 Python 运行时位于 runtime\python\，目标电脑不需要预装 Python。

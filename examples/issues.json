@@ -1,0 +1,16 @@
+{
+  "1": {
+    "id": 1,
+    "title": "mean 对空列表返回 int，测试期望 float",
+    "body": "复现：mean([]) 返回 0。验收：返回 0.0，且 test_stats.py 全部通过。",
+    "state": "open",
+    "labels": ["bug", "tests"]
+  },
+  "2": {
+    "id": 2,
+    "title": "为 diff 审查补一个固定的五条清单",
+    "body": "验收：reviewer 只回最终摘要，主上下文增量不超过 500 token。",
+    "state": "open",
+    "labels": ["reviewer", "context"]
+  }
+}

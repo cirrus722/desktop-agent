@@ -1,0 +1,16 @@
+{
+  "servers": {
+    "filesystem-echo": {
+      "command": "python",
+      "args": ["examples/echo_server.py"],
+      "cwd": ".",
+      "description": "课程自带的示例 MCP server（stdio），演示 MCP 工具调用全流程"
+    },
+    "issue-tracker": {
+      "command": "python",
+      "args": ["examples/issue_server.py"],
+      "cwd": ".",
+      "description": "本地 issue-tracker MCP server，供 fetch-issue 技能调用"
+    }
+  }
+}

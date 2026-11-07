@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Desktop Agent 安装与使用说明</title>
+<style>
+@page { size: A4; margin: 16mm 17mm 16mm 17mm; }
+* { box-sizing: border-box; }
+body { margin: 0; color: #242833; font-family: "Microsoft YaHei", "Segoe UI", sans-serif; font-size: 10.5pt; line-height: 1.65; }
+h1 { font-size: 25pt; color: #264f9e; margin: 0 0 10px; letter-spacing: -.5px; }
+h2 { font-size: 16pt; color: #1f3f7a; margin: 22px 0 8px; border-bottom: 2px solid #dce6fb; padding-bottom: 4px; }
+h3 { font-size: 12.5pt; color: #2f5aa8; margin: 16px 0 5px; }
+p { margin: 6px 0; }
+ul, ol { margin: 6px 0 8px 22px; padding: 0; }
+li { margin: 3px 0; }
+code { font-family: Consolas, "Courier New", monospace; background: #f1f4fa; color: #b33b48; padding: 1px 4px; border-radius: 3px; font-size: 9.5pt; }
+pre { background: #222733; color: #e9edf5; padding: 10px 12px; border-radius: 6px; overflow: hidden; white-space: pre-wrap; page-break-inside: avoid; }
+pre code { background: none; color: inherit; padding: 0; }
+blockquote { margin: 10px 0; padding: 9px 13px; background: #fff7e6; border-left: 4px solid #e9a23b; color: #5c4520; }
+a { color: #2463c7; word-break: break-all; }
+table { width: 100%; border-collapse: collapse; margin: 9px 0 12px; font-size: 9.5pt; page-break-inside: avoid; }
+th { background: #eaf0fb; color: #1f3f7a; text-align: left; }
+th, td { border: 1px solid #ccd6e7; padding: 6px 8px; vertical-align: top; }
+figure { margin: 10px 0 14px; text-align: center; page-break-inside: avoid; }
+figure img { max-width: 100%; border: 1px solid #c8d1e2; border-radius: 6px; }
+figcaption { color: #6c7484; font-size: 9pt; margin-top: 4px; }
+hr { border: none; border-top: 1px solid #d7deea; margin: 20px 0; }
+.pagebreak { page-break-after: always; height: 0; }
+strong { color: #17233b; }
+</style>
+</head>
+<body>
+<h1>Desktop Agent 安装与使用说明</h1>
+<p><strong>版本：1.2.0　适用系统：Windows 10 / 11 64 位</strong></p>
+<p>Desktop Agent 是一个可安装到 Windows 的桌面智能体。它不是网页截图，也不是只会聊天的窗口：它在桌面窗口中接入大模型，能够读取和修改真实文件、执行命令、调用 MCP 工具，并把每一步工具调用、diff 和测试结果展示出来。</p>
+<figure><img src="screenshots/headless2.png" alt="三栏主界面"><figcaption>三栏主界面</figcaption></figure>
+<h2>1. 软件从哪里来</h2>
+<ul>
+<li>原始工程：课程大作业 <code>desktop-agent</code> 的 Python 源码。</li>
+<li>安装来源：本作业交付的 <code>DesktopAgent-1.2.0-Portable.zip</code>（推荐，内含一键安装脚本）或 <code>DesktopAgent-1.2.0-Setup.exe</code>。两者都自带 Python 3.12 运行时和全部依赖，目标电脑不需要预装 Python，也不需要管理员权限。</li>
+<li>源码位置：安装完成后位于安装目录的 <code>app\</code>，与开发时使用的源码一致；安装包内也带有源码。</li>
+<li>GitHub 仓库：待上传。源码已整理为可直接推送的 Git 仓库；取得实际地址后，请把本行替换为仓库 URL，并同时写入安装目录的 <code>docs\GITHUB_URL.txt</code>。</li>
+</ul>
+<blockquote>这个安装器是课程作业构建产物，没有商业代码签名证书。Windows SmartScreen 可能提示“未知发布者”，此时点“更多信息 → 仍要运行”。如果电脑开启了“智能应用控制”并强制阻止未签名 EXE，请使用 ZIP 包中的一键安装脚本；脚本使用系统自带命令和已签名的 Python 运行时，不会被拦截。</blockquote>
+<h2>2. 安装步骤</h2>
+<p>推荐方式（适用于开启了智能应用控制的电脑）：</p>
+<ol>
+<li>右键 <code>DesktopAgent-1.2.0-Portable.zip</code>，选择“全部解压缩”。</li>
+<li>进入解压后的文件夹，双击 <code>安装 Desktop Agent.cmd</code>。</li>
+<li>安装脚本会把程序复制到当前用户目录，默认路径为 <code>%LOCALAPPDATA%\Programs\DesktopAgent</code>。</li>
+<li>安装完成后会自动打开 Desktop Agent 窗口，并打开配置文件 <code>%APPDATA%\DesktopAgent\.env</code>。</li>
+</ol>
+<p>如果 <code>DesktopAgent-1.2.0-Setup.exe</code> 能正常运行，也可以直接双击它，效果相同。</p>
+<ol>
+<li>在 <code>.env</code> 中找到这一行：</li>
+</ol>
+<pre><code>LLM_API_KEY=sk-xxx</code></pre>
+<p>把它替换成你自己的 API Key，例如：</p>
+<pre><code>LLM_API_KEY=sk-你的真实Key</code></pre>
+<ol>
+<li>保存并关闭记事本；如果程序已经先打开了，关闭程序后从桌面快捷方式重新启动。</li>
+</ol>
+<p>DeepSeek 用户可以在 &lt;https://platform.deepseek.com/api_keys&gt; 创建 Key。默认配置已经是 DeepSeek 的 OpenAI 兼容接口，一般只需要改 <code>LLM_API_KEY</code> 一行。</p>
+<h3>安装后在哪里启动</h3>
+<ul>
+<li>桌面快捷方式：<code>Desktop Agent</code></li>
+<li>开始菜单：<code>Desktop Agent → Desktop Agent</code></li>
+<li>程序目录：<code>%LOCALAPPDATA%\Programs\DesktopAgent</code></li>
+<li>启动文件：<code>启动 Desktop Agent.vbs</code>（双击不显示黑色控制台窗口）</li>
+<li>出错排查：<code>启动 Desktop Agent（调试）.cmd</code>（显示 Python 错误信息）</li>
+</ul>
+<h3>配置 API Key 的另一种入口</h3>
+<p>开始菜单中有 <code>配置 API Key</code>，也可以直接按 <code>Win + R</code>，输入：</p>
+<pre><code>notepad %APPDATA%\DesktopAgent\.env</code></pre>
+<p>不要把带真实 Key 的 <code>.env</code> 上传到 GitHub。仓库只保存 <code>.env.example</code>。</p>
+<div class="pagebreak"></div>
+<h2>3. 它到底有什么功能</h2>
+<h3>3.1 桌面窗口 + 三栏工作台</h3>
+<p>左侧是工作区文件树，中间是代码/diff，右侧是对话和工具调用。所有智能体事件都从后端事件流推送，不依赖前端伪造。</p>
+<ul>
+<li>文件树可以点击打开文件；</li>
+<li>修改文件后中间自动显示 unified diff；</li>
+<li>对话区逐条显示 <code>read</code>、<code>write</code>、<code>edit</code>、<code>bash</code> 和 MCP 工具卡片；</li>
+<li>工具失败会显示红色错误卡片，模型能看到错误并继续自救；</li>
+<li>顶部绿点表示 WebSocket 已连接，红点表示后端未连接。</li>
+</ul>
+<h3>3.2 接入大模型</h3>
+<p>支持两类接口：</p>
+<ul>
+<li><code>openai</code>：OpenAI 兼容接口，默认 <code>https://api.deepseek.com</code> + <code>deepseek-chat</code>；</li>
+<li><code>anthropic</code>：Anthropic Messages API；</li>
+<li><code>mock</code>：无需 Key 的固定剧本模式，只用于课程演示和联调。</li>
+</ul>
+<p>相关配置全部在 <code>%APPDATA%\DesktopAgent\.env</code>。</p>
+<h3>3.3 只有四个通用工具</h3>
+<table>
+<thead><tr><th>工具</th><th>功能</th><th>关键防护</th></tr></thead>
+<tbody>
+<tr><td><code>read</code></td><td>按行读取文件，支持分页和图片</td><td>行号清晰；图片以内容块返回</td></tr>
+<tr><td><code>write</code></td><td>创建/覆盖文件</td><td>自动建目录；临时文件 + rename 原子写</td></tr>
+<tr><td><code>edit</code></td><td>精确字符串替换</td><td>0 次或多次匹配都报错，拒绝模糊修改</td></tr>
+<tr><td><code>bash</code></td><td>执行命令，返回 stdout/stderr/退出码</td><td>超时；工作区沙箱；中断时杀进程</td></tr>
+</tbody></table>
+<p>所有文件路径经过 <code>resolve()</code> 和工作区前缀校验，<code>../</code> 越界会被拒绝。</p>
+<h3>3.4 技能（Skills）按需加载</h3>
+<p>启动时只把技能名称和描述放进系统提示；模型真正需要时才调用 <code>use_skill</code> 读取正文，避免把全部流程塞进上下文。</p>
+<p>内置三个技能：</p>
+<ul>
+<li><code>run-tests</code>：先跑测试，红灯定位，改完再跑绿灯；</li>
+<li><code>review-diff</code>：收集 diff 并做只读审查；</li>
+<li><code>fetch-issue</code>：通过本地 issue-tracker MCP server 获取 issue。</li>
+</ul>
+<div class="pagebreak"></div>
+<h3>3.5 AGENTS.md 分层注入</h3>
+<p>项目级 <code>AGENTS.md</code> 会从工作目录向上查找；也支持全局 <code>~/.agents/AGENTS.md</code>。模型因此知道项目结构、命令和坑，不需要每次重复解释。</p>
+<h3>3.6 Hooks 护栏与自动测试</h3>
+<ul>
+<li>工具执行前拦截 <code>.env</code>、<code>.pem</code>、<code>.key</code> 等敏感文件写入；</li>
+<li>拦截明显的破坏性命令，并给出更安全的替代做法；</li>
+<li><code>write</code> / <code>edit</code> 后自动寻找并运行测试；</li>
+<li>失败时只回注三行摘要，避免把整段 pytest 输出塞进模型上下文。</li>
+</ul>
+<h3>3.7 只读 reviewer 子 agent</h3>
+<p>主 agent 可以调用 reviewer 检查当前 diff。reviewer 使用独立的只读工具箱，不能写文件、不能执行任意命令，只把审查摘要返回主上下文，减少上下文污染。</p>
+<h3>3.8 MCP over stdio</h3>
+<p>项目自带两个示例 MCP server：</p>
+<ul>
+<li><code>filesystem-echo</code>：演示 echo 工具；</li>
+<li><code>issue-tracker</code>：演示 <code>fetch_issue</code> / <code>list_issues</code>。</li>
+</ul>
+<p>配置位于工作区的 <code>mcp.json</code>。工具统一命名为 <code>mcp__&lt;server&gt;__&lt;tool&gt;</code>，界面显示紫色 <code>MCP</code> 徽章，与内置工具区分。</p>
+<h3>3.9 会话历史、事件流与中断</h3>
+<ul>
+<li>每轮对话写入 <code>%APPDATA%\DesktopAgent\.session\history.json</code>，重启后自动恢复；</li>
+<li>WebSocket 用于页面双向通信，SSE 用于外部观察：<code>http://127.0.0.1:8765/api/events</code>；</li>
+<li>“中断”会真实停止循环并终止正在运行的 bash 子进程，不是只改按钮文字。</li>
+</ul>
+<div class="pagebreak"></div>
+<h2>4. 第一次使用怎么验证</h2>
+<h3>4.1 看连接状态</h3>
+<p>启动后等待 2–5 秒，顶部应出现绿点和“已连接”。如果一直是红点，先看 <code>启动 Desktop Agent（调试）.cmd</code> 是否报错。</p>
+<h3>4.2 让 agent 做一次真实修改</h3>
+<p>点击右侧输入框，输入：</p>
+<pre><code>请先读取 stats.py，定位空列表均值返回类型的问题，修复后运行 test_stats.py，最后调用 MCP echo 工具确认链路。</code></pre>
+<p>一次成功运行会依次出现：</p>
+<ol>
+<li><code>read</code> 工具卡片，读取 <code>stats.py</code>；</li>
+<li><code>edit</code> 工具卡片；若替换字符串不唯一，会先出现一次红色失败卡片；</li>
+<li>唯一匹配后成功 edit，中间栏显示 diff；</li>
+<li><code>bash</code> 运行测试，输出通过；</li>
+<li><code>mcp__filesystem-echo__echo</code>，右上角出现紫色 MCP 徽章；</li>
+<li>最终中文总结和“本轮结束”。</li>
+</ol>
+<h3>4.3 不需要 Key 的演示</h3>
+<p>如果暂时没有 Key，把 <code>.env</code> 改成：</p>
+<pre><code>LLM_PROVIDER=mock</code></pre>
+<p>mock 模式会按固定剧本执行 read → 失败 edit → 成功 edit → 测试 → MCP echo，适合课堂演示，但不会真正理解新问题。</p>
+<div class="pagebreak"></div>
+<h2>5. 安装后的目录</h2>
+<pre><code>%LOCALAPPDATA%\Programs\DesktopAgent\
+├── app\                    完整 Python 源码
+│   ├── agent\             循环、工具、LLM、MCP、skills、hooks、reviewer
+│   ├── server\            FastAPI + WebSocket + SSE
+│   ├── ui\                HTML/CSS/JavaScript 三栏界面
+│   ├── skills\            三个技能
+│   └── examples\          两个示例 MCP server
+├── runtime\python\        自带 Python 3.12 + 全部依赖
+├── docs\                  本说明与截图
+├── 启动 Desktop Agent.vbs
+├── 启动 Desktop Agent（调试）.cmd
+├── Uninstall.cmd
+└── .env.example（也保留在 app\ 下）
+
+%APPDATA%\DesktopAgent\
+├── .env                    你的 API Key 和模型配置
+└── .session\history.json   对话历史
+
+%USERPROFILE%\Documents\DesktopAgent\workspace\
+├── stats.py               演示项目
+├── test_stats.py
+├── skills\                工作区技能副本
+├── examples\              工作区 MCP server 副本
+├── mcp.json
+└── AGENTS.md</code></pre>
+<p>用户代码在“文档 / DesktopAgent / workspace”中，卸载程序不会删除它。</p>
+<h2>6. 常见问题</h2>
+<h3>6.1 顶部红点一直不变绿</h3>
+<p>先确认只启动了一个 Desktop Agent。默认端口是 <code>8765</code>；如果旧进程仍占用端口，新进程的后端会启动失败。任务管理器结束旧的 <code>pythonw.exe</code>，或在命令提示符执行：</p>
+<pre><code>taskkill /f /im pythonw.exe</code></pre>
+<p>注意：这会结束当前用户下所有 pythonw 进程，执行前确认没有别的 Python 桌面程序在运行。</p>
+<h3>6.2 提示 401、402 或模型调用失败</h3>
+<ul>
+<li>检查 <code>LLM_API_KEY</code> 是否完整、有没有多余空格；</li>
+<li>检查 Key 是否有余额；</li>
+<li>检查 <code>LLM_BASE_URL</code> 和 <code>LLM_MODEL</code> 是否匹配；</li>
+<li>保存 <code>.env</code> 后必须重启程序。</li>
+</ul>
+<h3>6.3 窗口空白或提示 WebView2 缺失</h3>
+<p>安装 Microsoft Edge WebView2 Runtime（Evergreen）：</p>
+<p>&lt;https://developer.microsoft.com/microsoft-edge/webview2/&gt;</p>
+<p>Windows 11 和大多数已安装 Edge 的 Windows 10 已经自带 WebView2。</p>
+<h3>6.4 Windows 提示未知发布者</h3>
+<p>这是课程构建产物，未购买代码签名证书。点击“更多信息 → 仍要运行”。如果系统策略直接阻止，请使用便携版 ZIP。</p>
+<h3>6.5 改了代码但界面没变</h3>
+<p>前端静态文件在 <code>app\ui</code>。修改 <code>app.js</code> 或 <code>style.css</code> 后，把 <code>app\ui\index.html</code> 里的 <code>?v=5</code> 改成新版本号，或清理 WebView2 缓存后重启。</p>
+<h3>6.6 如何卸载</h3>
+<p>打开开始菜单 → <code>Desktop Agent</code> → <code>卸载 Desktop Agent</code>，或在 Windows“设置 → 应用 → 已安装的应用”中卸载。程序目录会被删除；<code>%APPDATA%\DesktopAgent</code> 和文档工作区会保留，便于保留 Key 与代码。</p>
+<p>如需彻底清理，在确认备份后手动删除：</p>
+<pre><code>%APPDATA%\DesktopAgent
+%USERPROFILE%\Documents\DesktopAgent</code></pre>
+<div class="pagebreak"></div>
+<h2>7. 作业交付对应关系</h2>
+<table>
+<thead><tr><th>作业要求</th><th>对应文件</th></tr></thead>
+<tbody>
+<tr><td>1. 安装包（里面有代码）</td><td><code>DesktopAgent-1.2.0-Portable.zip</code>（推荐）/ <code>DesktopAgent-1.2.0-Setup.exe</code>，安装后代码在 <code>app\</code></td></tr>
+<tr><td>2. 说明：来源、功能、GitHub</td><td><code>安装与使用说明.pdf</code> / <code>.md</code>，GitHub 地址见第 1 节</td></tr>
+<tr><td>3. 演示视频</td><td><code>DesktopAgent-演示视频.mp4</code></td></tr>
+</tbody></table>
+<h2>8. 演示视频内容</h2>
+<p>实际录制文件为 <code>DesktopAgent-演示视频.mp4</code>，约 95 秒，带中文字幕。视频依次展示：</p>
+<ol>
+<li>软件定位与能力概览；</li>
+<li>ZIP 解压、运行安装脚本、配置 API Key 的三个步骤；</li>
+<li>三栏界面和后端 ReAct 事件流；</li>
+<li>打开真实工作区中的 <code>stats.py</code>；</li>
+<li>输入任务后依次执行 read → 失败 edit → 成功 edit；</li>
+<li>中间栏 unified diff、<code>bash</code> 测试通过、MCP echo 调用；</li>
+<li>最终回答只出现一次；</li>
+<li><code>mcp.json</code> 与 Skills 按需加载；</li>
+<li>交付内容与启动位置。</li>
+</ol>
+<h2>9. 已知限制</h2>
+<ul>
+<li>安装器未做商业代码签名，首次运行可能触发 SmartScreen；</li>
+<li>默认单实例端口为 <code>8765</code>，同一用户同时启动两个实例时，第二个实例会连接失败；</li>
+<li>模型能力依赖外部 API，需要网络、有效 Key 和余额；</li>
+<li>mock 模式只按固定剧本演示，不代表模型真实推理；</li>
+<li>自动测试 Hook 只覆盖能自动发现的 <code>test_*.py</code> 或 <code>tests/</code>，复杂项目建议显式设置 <code>AGENT_TEST_CMD</code>。</li>
+</ul>
+<hr>
+<p><strong>仓库地址：</strong> 待上传（取得 GitHub URL 后更新本行与第 1 节）</p>
+<p><strong>构建时间：</strong> 2026-11-07　<strong>版本：</strong> 1.2.0</p>
+</body>
+</html>

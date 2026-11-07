@@ -1,0 +1,7 @@
+;!@Install@!UTF-8!
+Title="Desktop Agent 1.2.0"
+BeginPrompt="是否安装 Desktop Agent 到当前用户目录？"
+RunProgram="Install.cmd"
+GUIMode="2"
+Progress="yes"
+;!@InstallEnd@!
